@@ -22,7 +22,23 @@ export async function analyzeImage(imageUrl: string): Promise<AnalysisResult> {
   const apiUrl = `https://detect.roboflow.com/${ROBOFLOW_MODEL}/${ROBOFLOW_VERSION}`;
 
   try {
-    const response = await fetch(`${apiUrl}?api_key=${ROBOFLOW_API_KEY}&image=${encodeURIComponent(imageUrl)}`);
+    let response;
+
+    // Base64 ise POST ile gonder, URL ise GET ile gonder
+    if (imageUrl.startsWith('data:')) {
+      // Base64 - sadece data kismini al
+      const base64Data = imageUrl.split(',')[1];
+      response = await fetch(`${apiUrl}?api_key=${ROBOFLOW_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: base64Data
+      });
+    } else {
+      // URL
+      response = await fetch(`${apiUrl}?api_key=${ROBOFLOW_API_KEY}&image=${encodeURIComponent(imageUrl)}`);
+    }
 
     if (!response.ok) {
       throw new Error(`Roboflow API error: ${response.status}`);
