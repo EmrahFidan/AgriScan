@@ -19,7 +19,7 @@ export default function ImageGallery() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 flex items-center justify-center mb-4 animate-pulse shadow-xl">
+        <div className="w-20 h-20 rounded-2xl bg-emerald-600 flex items-center justify-center mb-4 animate-pulse shadow-xl">
           <span className="text-4xl">🌿</span>
         </div>
         <p className="text-earth-light font-medium">Goruntuler yukleniyor...</p>
@@ -94,11 +94,11 @@ export default function ImageGallery() {
             {/* Status Badge */}
             <div className="absolute top-3 right-3">
               {image.analyzed ? (
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center shadow-lg">
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
               ) : (
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg">
+                <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center shadow-lg">
                   <span className="text-white text-sm">⏳</span>
                 </div>
               )}
@@ -121,7 +121,7 @@ export default function ImageGallery() {
             </div>
 
             {/* Corner Decoration */}
-            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gradient-to-tr from-amber-400 to-amber-300 opacity-0 group-hover:opacity-30 transition-opacity rounded-tr-full" />
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-amber-400 opacity-0 group-hover:opacity-20 transition-opacity rounded-tr-full" />
           </div>
         ))}
       </div>
@@ -145,7 +145,7 @@ export default function ImageGallery() {
             </button>
 
             {/* Image */}
-            <div className="aspect-video bg-gradient-to-br from-[#f5f0e8] to-[#e8dfd0]">
+            <div className="aspect-video bg-[#f5f0e8]">
               <img
                 src={selectedImage.url}
                 alt={selectedImage.fileName}
@@ -154,7 +154,7 @@ export default function ImageGallery() {
             </div>
 
             {/* Info Bar */}
-            <div className="p-6 bg-gradient-to-r from-[#faf6ef] to-amber-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="p-6 bg-[#faf6ef] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h3 className="font-display font-bold text-xl mb-1 text-earth">
                   {selectedImage.fileName}
@@ -172,8 +172,8 @@ export default function ImageGallery() {
 
               <div className={`px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-sm ${
                 selectedImage.analyzed
-                  ? 'bg-gradient-to-r from-emerald-600 to-green-600 text-white'
-                  : 'bg-gradient-to-r from-amber-500 to-amber-600 text-white'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-amber-500 text-[#3d3426]'
               }`}>
                 <span className="text-lg">{selectedImage.analyzed ? '✓' : '⏳'}</span>
                 <span className="font-semibold">

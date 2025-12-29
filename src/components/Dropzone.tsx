@@ -83,7 +83,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
 
         <div className="space-y-4">
           {/* Icon */}
-          <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 shadow-xl ${
+          <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-emerald-600 shadow-xl ${
             isUploading ? 'animate-pulse' : isDragging ? 'animate-bounce' : ''
           }`}>
             <span className="text-4xl">
@@ -117,7 +117,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
                   {format}
                 </span>
               ))}
-              <span className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full text-xs font-bold shadow-sm">
+              <span className="px-3 py-1.5 bg-amber-500 text-[#3d3426] rounded-full text-xs font-bold shadow-sm">
                 Coklu Secim
               </span>
             </div>
@@ -133,7 +133,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
               <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
               <span className="font-semibold text-earth">Yukleme Durumu</span>
             </div>
-            <span className="text-sm font-bold px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-full shadow-sm">
+            <span className="text-sm font-bold px-4 py-1.5 bg-emerald-600 text-white rounded-full shadow-sm">
               {completedCount} / {totalCount}
             </span>
           </div>
@@ -142,9 +142,9 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
             {progresses.map((p, idx) => (
               <div key={idx} className="flex items-center gap-3 p-3 bg-[#f5f0e8] rounded-xl border border-[#e8dfd0]">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 shadow-sm ${
-                  p.status === 'completed' ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white' :
-                  p.status === 'error' ? 'bg-gradient-to-br from-red-400 to-red-500 text-white' :
-                  'bg-gradient-to-br from-amber-400 to-amber-500 text-white'
+                  p.status === 'completed' ? 'bg-emerald-600 text-white' :
+                  p.status === 'error' ? 'bg-red-500 text-white' :
+                  'bg-amber-500 text-white'
                 }`}>
                   {p.status === 'completed' ? '✓' :
                    p.status === 'error' ? '✕' :
@@ -156,8 +156,8 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
                   <div className="w-full h-2 bg-[#e8dfd0] rounded-full mt-2 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-300 ${
-                        p.status === 'completed' ? 'bg-gradient-to-r from-emerald-500 to-green-600' :
-                        p.status === 'error' ? 'bg-gradient-to-r from-red-400 to-red-500' : 'bg-gradient-to-r from-amber-400 to-amber-500'
+                        p.status === 'completed' ? 'bg-emerald-500' :
+                        p.status === 'error' ? 'bg-red-500' : 'bg-amber-500'
                       }`}
                       style={{ width: p.progress + '%' }}
                     />
