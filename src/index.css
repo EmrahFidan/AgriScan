@@ -7,11 +7,37 @@
 
 body {
   font-family: var(--font-body);
-  background-color: #f8faf8;
+  background-color: #f5f0e8;
 }
 
 .font-display {
   font-family: var(--font-display);
+}
+
+/* Warm cream background */
+.bg-cream {
+  background-color: #faf6ef;
+}
+
+.bg-cream-dark {
+  background-color: #f5f0e8;
+}
+
+/* Earth brown colors */
+.text-earth {
+  color: #4a3f35;
+}
+
+.text-earth-light {
+  color: #6b5d4d;
+}
+
+.bg-earth {
+  background-color: #4a3f35;
+}
+
+.border-earth {
+  border-color: #d4c4b0;
 }
 
 @keyframes slideUp {

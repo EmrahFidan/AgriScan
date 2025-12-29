@@ -68,8 +68,8 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
         onDrop={handleDrop}
         className={`relative rounded-2xl border-2 border-dashed p-10 text-center cursor-pointer transition-all duration-300 shadow-lg ${
           isDragging
-            ? 'border-emerald-500 bg-emerald-50 scale-[1.02] shadow-emerald-100'
-            : 'border-stone-300 bg-gradient-to-br from-white to-amber-50/30 hover:border-emerald-400 hover:bg-emerald-50/50 hover:shadow-xl'
+            ? 'border-emerald-500 bg-emerald-50 scale-[1.02]'
+            : 'border-[#d4c4b0] bg-[#faf6ef] hover:border-emerald-400 hover:bg-emerald-50/50 hover:shadow-xl'
         }`}
       >
         <input
@@ -83,7 +83,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
 
         <div className="space-y-4">
           {/* Icon */}
-          <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 shadow-xl shadow-emerald-200 ${
+          <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-700 shadow-xl ${
             isUploading ? 'animate-pulse' : isDragging ? 'animate-bounce' : ''
           }`}>
             <span className="text-4xl">
@@ -93,7 +93,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
 
           {/* Text */}
           <div>
-            <h3 className="font-display text-2xl font-bold text-stone-800 mb-2">
+            <h3 className="font-display text-2xl font-bold text-earth mb-2">
               {isUploading
                 ? 'Goruntuler Yukleniyor...'
                 : isDragging
@@ -101,7 +101,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
                   : 'Goruntuleri Buraya Surukleyin'
               }
             </h3>
-            <p className="text-stone-500">
+            <p className="text-earth-light">
               {isUploading
                 ? 'Lutfen bekleyin, dosyalariniz isleniyor'
                 : 'veya secmek icin tiklayin'
@@ -113,11 +113,11 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
           {!isUploading && (
             <div className="flex items-center justify-center gap-2 pt-2">
               {['PNG', 'JPG', 'JPEG'].map((format) => (
-                <span key={format} className="px-3 py-1.5 bg-stone-100 text-stone-600 rounded-full text-xs font-semibold">
+                <span key={format} className="px-3 py-1.5 bg-[#e8dfd0] text-earth-light rounded-full text-xs font-semibold">
                   {format}
                 </span>
               ))}
-              <span className="px-3 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-white rounded-full text-xs font-bold shadow-sm">
+              <span className="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-full text-xs font-bold shadow-sm">
                 Coklu Secim
               </span>
             </div>
@@ -127,24 +127,24 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
 
       {/* Progress Section */}
       {progresses.length > 0 && (
-        <div className="mt-6 p-5 bg-white rounded-2xl shadow-lg border border-stone-100">
+        <div className="mt-6 p-5 bg-[#faf6ef] rounded-2xl shadow-lg border border-[#e8dfd0]">
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-semibold text-stone-700">Yukleme Durumu</span>
+              <span className="font-semibold text-earth">Yukleme Durumu</span>
             </div>
-            <span className="text-sm font-bold px-4 py-1.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-full shadow-sm">
+            <span className="text-sm font-bold px-4 py-1.5 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-full shadow-sm">
               {completedCount} / {totalCount}
             </span>
           </div>
 
           <div className="space-y-3 max-h-48 overflow-y-auto">
             {progresses.map((p, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-3 bg-stone-50 rounded-xl border border-stone-100">
+              <div key={idx} className="flex items-center gap-3 p-3 bg-[#f5f0e8] rounded-xl border border-[#e8dfd0]">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 shadow-sm ${
-                  p.status === 'completed' ? 'bg-gradient-to-br from-emerald-400 to-green-500 text-white' :
+                  p.status === 'completed' ? 'bg-gradient-to-br from-emerald-500 to-green-600 text-white' :
                   p.status === 'error' ? 'bg-gradient-to-br from-red-400 to-red-500 text-white' :
-                  'bg-gradient-to-br from-amber-400 to-orange-500 text-white'
+                  'bg-gradient-to-br from-amber-400 to-amber-500 text-white'
                 }`}>
                   {p.status === 'completed' ? '✓' :
                    p.status === 'error' ? '✕' :
@@ -152,12 +152,12 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
                 </div>
 
                 <div className="flex-grow min-w-0">
-                  <p className="font-medium truncate text-sm text-stone-700">{p.fileName}</p>
-                  <div className="w-full h-2 bg-stone-200 rounded-full mt-2 overflow-hidden">
+                  <p className="font-medium truncate text-sm text-earth">{p.fileName}</p>
+                  <div className="w-full h-2 bg-[#e8dfd0] rounded-full mt-2 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all duration-300 ${
-                        p.status === 'completed' ? 'bg-gradient-to-r from-emerald-400 to-green-500' :
-                        p.status === 'error' ? 'bg-gradient-to-r from-red-400 to-red-500' : 'bg-gradient-to-r from-amber-400 to-orange-500'
+                        p.status === 'completed' ? 'bg-gradient-to-r from-emerald-500 to-green-600' :
+                        p.status === 'error' ? 'bg-gradient-to-r from-red-400 to-red-500' : 'bg-gradient-to-r from-amber-400 to-amber-500'
                       }`}
                       style={{ width: p.progress + '%' }}
                     />
@@ -165,7 +165,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
                 </div>
 
                 <span className={`text-sm font-bold flex-shrink-0 ${
-                  p.status === 'completed' ? 'text-emerald-600' :
+                  p.status === 'completed' ? 'text-emerald-700' :
                   p.status === 'error' ? 'text-red-600' : 'text-amber-600'
                 }`}>
                   {Math.round(p.progress)}%
