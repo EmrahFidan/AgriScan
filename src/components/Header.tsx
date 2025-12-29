@@ -4,85 +4,43 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'py-3' : 'py-5'
-      }`}
-      style={{
-        background: scrolled ? 'rgba(250, 248, 245, 0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(29, 77, 46, 0.1)' : 'none'
-      }}
-    >
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${
+      scrolled ? 'bg-white/95 backdrop-blur shadow-sm py-3' : 'bg-white py-4'
+    }`}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div
-              className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-lg transition-transform hover:scale-105"
-              style={{
-                background: 'linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-medium) 100%)'
-              }}
-            >
+            <div className="w-11 h-11 bg-gradient-to-br from-green-600 to-green-700 rounded-xl flex items-center justify-center text-xl shadow-lg">
               🌿
             </div>
             <div>
-              <h1
-                className="text-xl font-bold tracking-tight"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  color: 'var(--forest-deep)'
-                }}
-              >
-                AgriScan
-              </h1>
-              <p className="text-xs" style={{ color: 'var(--sage)' }}>
-                Yaprak Analiz Sistemi
-              </p>
+              <h1 className="font-display text-xl font-bold text-gray-900">AgriScan</h1>
+              <p className="text-xs text-gray-500">Yaprak Analiz Sistemi</p>
             </div>
           </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:opacity-70"
-              style={{ color: 'var(--earth)' }}
-            >
+            <a href="#" className="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">
               Nasil Calisir?
             </a>
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:opacity-70"
-              style={{ color: 'var(--earth)' }}
-            >
+            <a href="#" className="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">
               Hastaliklar
             </a>
-            <a
-              href="#"
-              className="text-sm font-medium transition-colors hover:opacity-70"
-              style={{ color: 'var(--earth)' }}
-            >
+            <a href="#" className="text-sm font-medium text-gray-600 hover:text-green-600 transition-colors">
               Hakkinda
             </a>
           </nav>
 
-          {/* CTA Button */}
-          <button
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 hover:shadow-lg"
-            style={{
-              background: 'var(--amber)',
-              color: 'var(--earth)'
-            }}
-          >
+          {/* CTA */}
+          <button className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-sm font-semibold transition-all hover:shadow-lg">
             Baslayalim
           </button>
         </div>

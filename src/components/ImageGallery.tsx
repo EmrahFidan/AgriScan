@@ -19,13 +19,10 @@ export default function ImageGallery() {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 animate-pulse"
-          style={{ background: 'var(--mint)' }}
-        >
+        <div className="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center mb-4 animate-pulse">
           <span className="text-3xl">🌿</span>
         </div>
-        <p style={{ color: 'var(--earth-light)' }}>Goruntuler yukleniyor...</p>
+        <p className="text-gray-500">Goruntuler yukleniyor...</p>
       </div>
     );
   }
@@ -33,25 +30,13 @@ export default function ImageGallery() {
   if (images.length === 0) {
     return (
       <div className="text-center py-20">
-        <div
-          className="inline-flex items-center justify-center w-24 h-24 rounded-3xl mb-6"
-          style={{
-            background: 'white',
-            boxShadow: '0 10px 40px rgba(0,0,0,0.08)'
-          }}
-        >
+        <div className="inline-flex items-center justify-center w-24 h-24 rounded-3xl mb-6 bg-white shadow-xl">
           <span className="text-5xl">🌱</span>
         </div>
-        <h3
-          className="text-2xl font-bold mb-3"
-          style={{
-            fontFamily: 'var(--font-display)',
-            color: 'var(--earth)'
-          }}
-        >
+        <h3 className="font-display text-2xl font-bold mb-3 text-gray-800">
           Henuz Goruntu Yuklenmedi
         </h3>
-        <p style={{ color: 'var(--earth-light)' }}>
+        <p className="text-gray-500">
           Yukaridaki alani kullanarak drone goruntulerinizi yukleyebilirsiniz
         </p>
       </div>
@@ -63,42 +48,24 @@ export default function ImageGallery() {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
-          <h2
-            className="text-2xl md:text-3xl font-bold mb-2"
-            style={{
-              fontFamily: 'var(--font-display)',
-              color: 'var(--earth)'
-            }}
-          >
+          <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 text-gray-800">
             Yuklenen Goruntuler
           </h2>
-          <p style={{ color: 'var(--earth-light)' }}>
+          <p className="text-gray-500">
             Toplam {images.length} goruntu analiz icin hazir
           </p>
         </div>
 
         <div className="flex gap-3">
-          <div
-            className="flex items-center gap-2 px-4 py-2 rounded-xl"
-            style={{ background: 'white' }}
-          >
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ background: 'var(--success)' }}
-            />
-            <span className="text-sm font-medium" style={{ color: 'var(--earth)' }}>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white shadow-sm">
+            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <span className="text-sm font-medium text-gray-700">
               {images.filter(i => i.analyzed).length} Analiz Edildi
             </span>
           </div>
-          <div
-            className="flex items-center gap-2 px-4 py-2 rounded-xl"
-            style={{ background: 'white' }}
-          >
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ background: 'var(--warning)' }}
-            />
-            <span className="text-sm font-medium" style={{ color: 'var(--earth)' }}>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white shadow-sm">
+            <div className="w-3 h-3 rounded-full bg-amber-500" />
+            <span className="text-sm font-medium text-gray-700">
               {images.filter(i => !i.analyzed).length} Bekliyor
             </span>
           </div>
@@ -111,13 +78,8 @@ export default function ImageGallery() {
           <div
             key={image.id}
             onClick={() => setSelectedImage(image)}
-            className="group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] animate-slide-up"
-            style={{
-              background: 'white',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-              animationDelay: (idx * 0.05) + 's',
-              opacity: 0
-            }}
+            className="group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] bg-white shadow-md hover:shadow-xl animate-slideUp"
+            style={{ animationDelay: `${idx * 0.05}s` }}
           >
             {/* Image */}
             <div className="aspect-square overflow-hidden">
@@ -132,29 +94,18 @@ export default function ImageGallery() {
             {/* Status Badge */}
             <div className="absolute top-3 right-3">
               {image.analyzed ? (
-                <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg"
-                  style={{ background: 'var(--success)' }}
-                >
+                <div className="w-8 h-8 rounded-xl bg-green-500 flex items-center justify-center shadow-lg">
                   <span className="text-white text-sm">✓</span>
                 </div>
               ) : (
-                <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg"
-                  style={{ background: 'var(--warning)' }}
-                >
+                <div className="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center shadow-lg">
                   <span className="text-white text-sm">⏳</span>
                 </div>
               )}
             </div>
 
             {/* Hover Overlay */}
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end"
-              style={{
-                background: 'linear-gradient(to top, rgba(61, 52, 38, 0.9) 0%, transparent 60%)'
-              }}
-            >
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end">
               <div className="p-4">
                 <p className="text-white font-medium text-sm truncate mb-1">
                   {image.fileName}
@@ -170,13 +121,7 @@ export default function ImageGallery() {
             </div>
 
             {/* Corner Decoration */}
-            <div
-              className="absolute bottom-0 left-0 w-16 h-16 opacity-0 group-hover:opacity-20 transition-opacity"
-              style={{
-                background: 'var(--amber)',
-                borderRadius: '0 100% 0 0'
-              }}
-            />
+            <div className="absolute bottom-0 left-0 w-16 h-16 bg-amber-400 opacity-0 group-hover:opacity-20 transition-opacity rounded-tr-full" />
           </div>
         ))}
       </div>
@@ -184,50 +129,37 @@ export default function ImageGallery() {
       {/* Image Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
-          style={{ background: 'rgba(0,0,0,0.8)' }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-fadeIn"
           onClick={() => setSelectedImage(null)}
         >
           <div
-            className="relative max-w-4xl w-full rounded-3xl overflow-hidden animate-slide-up"
-            style={{ background: 'white' }}
+            className="relative max-w-4xl w-full bg-white rounded-3xl overflow-hidden animate-slideUp"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
             <button
               onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-xl flex items-center justify-center transition-colors"
-              style={{
-                background: 'rgba(255,255,255,0.9)',
-                color: 'var(--earth)'
-              }}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-xl bg-white/90 text-gray-700 flex items-center justify-center transition-colors hover:bg-white"
             >
               ✕
             </button>
 
             {/* Image */}
-            <div className="aspect-video">
+            <div className="aspect-video bg-gray-100">
               <img
                 src={selectedImage.url}
                 alt={selectedImage.fileName}
                 className="w-full h-full object-contain"
-                style={{ background: 'var(--cream)' }}
               />
             </div>
 
             {/* Info Bar */}
-            <div className="p-6 flex items-center justify-between">
+            <div className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h3
-                  className="font-bold text-lg mb-1"
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    color: 'var(--earth)'
-                  }}
-                >
+                <h3 className="font-display font-bold text-lg mb-1 text-gray-800">
                   {selectedImage.fileName}
                 </h3>
-                <p className="text-sm" style={{ color: 'var(--earth-light)' }}>
+                <p className="text-sm text-gray-500">
                   {selectedImage.uploadedAt?.toLocaleDateString('tr-TR', {
                     day: 'numeric',
                     month: 'long',
@@ -238,13 +170,11 @@ export default function ImageGallery() {
                 </p>
               </div>
 
-              <div
-                className="px-4 py-2 rounded-xl flex items-center gap-2"
-                style={{
-                  background: selectedImage.analyzed ? 'var(--mint)' : 'var(--amber-light)',
-                  color: selectedImage.analyzed ? 'var(--forest-deep)' : 'var(--earth)'
-                }}
-              >
+              <div className={`px-4 py-2 rounded-xl flex items-center gap-2 ${
+                selectedImage.analyzed
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-amber-100 text-amber-800'
+              }`}>
                 <span>{selectedImage.analyzed ? '✓' : '⏳'}</span>
                 <span className="font-medium">
                   {selectedImage.analyzed ? 'Analiz Edildi' : 'Analiz Bekliyor'}

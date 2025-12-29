@@ -12,41 +12,27 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      
-      {/* Hero Section */}
-      <section className="relative py-16 md:py-24 overflow-hidden">
-        {/* Decorative Elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 rounded-full opacity-20 blur-3xl"
-             style={{ background: 'var(--mint)' }} />
-        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full opacity-10 blur-3xl"
-             style={{ background: 'var(--amber)' }} />
-        
-        <div className="max-w-6xl mx-auto px-6 relative">
-          <div className="text-center mb-12 animate-slide-up">
-            <span className="inline-block px-4 py-2 rounded-full text-sm font-medium mb-6"
-                  style={{ background: 'var(--mint)', color: 'var(--forest-deep)' }}>
-              YOLOv11 Yapay Zeka Destekli
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6"
-                style={{ fontFamily: 'var(--font-display)', color: 'var(--forest-deep)' }}>
-              Drone Goruntulerinizi
-              <span className="block mt-2" style={{ color: 'var(--amber)' }}>
-                Analiz Edin
-              </span>
-            </h1>
-            <p className="text-lg md:text-xl max-w-2xl mx-auto"
-               style={{ color: 'var(--earth-light)' }}>
-              Tarim arazilerinizden alinan goruntulerle yaprak hastaliklarini 
-              saniyeler icinde tespit edin. 50+ goruntu ayni anda yukleyebilirsiniz.
-            </p>
-          </div>
 
-          {/* Upload Section */}
-          <div className="animate-slide-up stagger-2" style={{ opacity: 0 }}>
-            <Dropzone onUploadComplete={handleUploadComplete} />
-          </div>
+      {/* Hero Section */}
+      <section className="py-16 md:py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <span className="inline-block px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-6">
+            YOLOv11 Yapay Zeka Destekli
+          </span>
+
+          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            Drone Goruntulerinizi
+            <span className="block text-green-600 mt-2">Analiz Edin</span>
+          </h1>
+
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+            Tarim arazilerinizden alinan goruntulerde yaprak hastaliklarini
+            saniyeler icinde tespit edin. 50+ goruntu ayni anda yukleyebilirsiniz.
+          </p>
+
+          <Dropzone onUploadComplete={handleUploadComplete} />
         </div>
       </section>
 
@@ -54,40 +40,35 @@ function App() {
       <Stats key={refreshKey} />
 
       {/* Gallery Section */}
-      <section className="py-16 flex-grow" style={{ background: 'var(--cream-dark)' }}>
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <ImageGallery key={refreshKey} />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12" style={{ background: 'var(--forest-deep)', color: 'var(--cream)' }}>
+      <footer className="py-10 bg-green-800 text-white">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-2xl"
-                   style={{ background: 'var(--amber)' }}>
+              <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-xl">
                 🌿
               </div>
               <div>
-                <p className="font-semibold" style={{ fontFamily: 'var(--font-display)' }}>
-                  AgriScan
-                </p>
-                <p className="text-sm opacity-70">Akilli Tarim Cozumleri</p>
+                <p className="font-display font-semibold">AgriScan</p>
+                <p className="text-sm text-green-200">Akilli Tarim Cozumleri</p>
               </div>
             </div>
-            
-            <div className="flex items-center gap-8 text-sm opacity-70">
+
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-green-200">
               <span>Domates Yaprak Hastaligi Tespiti</span>
-              <span className="hidden md:inline">•</span>
               <span>9 Hastalik Sinifi</span>
-              <span className="hidden md:inline">•</span>
               <span>%85+ Dogruluk</span>
             </div>
           </div>
-          
-          <div className="mt-8 pt-8 border-t border-white/10 text-center text-sm opacity-50">
-            <p>2024 AgriScan. YOLOv11 AI Model ile Desteklenmektedir.</p>
+
+          <div className="mt-8 pt-6 border-t border-green-700 text-center text-sm text-green-300">
+            2024 AgriScan - YOLOv11 AI Model ile Desteklenmektedir
           </div>
         </div>
       </footer>

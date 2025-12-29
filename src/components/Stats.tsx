@@ -15,71 +15,28 @@ export default function Stats() {
   const pendingImages = images.filter(i => !i.analyzed).length;
 
   const stats = [
-    {
-      label: 'Toplam Goruntu',
-      value: totalImages,
-      icon: '📷',
-      color: 'var(--forest-medium)'
-    },
-    {
-      label: 'Analiz Edildi',
-      value: analyzedImages,
-      icon: '✅',
-      color: 'var(--success)'
-    },
-    {
-      label: 'Beklemede',
-      value: pendingImages,
-      icon: '⏳',
-      color: 'var(--warning)'
-    },
-    {
-      label: 'Hastalik Sinifi',
-      value: 9,
-      icon: '🔬',
-      color: 'var(--amber)'
-    }
+    { label: 'Toplam Goruntu', value: totalImages, icon: '📷', colorClass: 'text-green-600' },
+    { label: 'Analiz Edildi', value: analyzedImages, icon: '✅', colorClass: 'text-emerald-600' },
+    { label: 'Beklemede', value: pendingImages, icon: '⏳', colorClass: 'text-amber-600' },
+    { label: 'Hastalik Sinifi', value: 9, icon: '🔬', colorClass: 'text-blue-600' }
   ];
 
   return (
-    <section className="py-12 relative">
+    <section className="py-12 bg-gray-50">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {stats.map((stat, idx) => (
+          {stats.map((stat) => (
             <div
               key={stat.label}
-              className="group relative p-6 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl animate-slide-up"
-              style={{
-                background: 'white',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-                animationDelay: (idx * 0.1) + 's',
-                opacity: 0
-              }}
+              className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
             >
-              {/* Decorative corner */}
-              <div
-                className="absolute top-0 right-0 w-20 h-20 rounded-bl-[40px] opacity-10 transition-opacity group-hover:opacity-20"
-                style={{ background: stat.color }}
-              />
-
-              <div className="relative">
-                <span className="text-3xl mb-3 block">{stat.icon}</span>
-                <p
-                  className="text-3xl md:text-4xl font-bold mb-1"
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    color: stat.color
-                  }}
-                >
-                  {stat.value}
-                </p>
-                <p
-                  className="text-sm font-medium"
-                  style={{ color: 'var(--earth-light)' }}
-                >
-                  {stat.label}
-                </p>
-              </div>
+              <span className="text-3xl mb-3 block">{stat.icon}</span>
+              <p className={`text-3xl md:text-4xl font-bold mb-1 font-display ${stat.colorClass}`}>
+                {stat.value}
+              </p>
+              <p className="text-sm font-medium text-gray-500">
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>
