@@ -1,6 +1,6 @@
-import { collection, getDocs, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import type { ImageData } from '../types';
+import type { ImageData, AnalysisResult } from '../types';
 
 export async function getImages(): Promise<ImageData[]> {
   const q = query(collection(db, 'images'), orderBy('uploadedAt', 'desc'));
@@ -15,14 +15,25 @@ export async function getImages(): Promise<ImageData[]> {
 
 export function subscribeToImages(callback: (images: ImageData[]) => void) {
   const q = query(collection(db, 'images'), orderBy('uploadedAt', 'desc'));
-  
+
   return onSnapshot(q, (snapshot) => {
     const images = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data(),
       uploadedAt: doc.data().uploadedAt?.toDate() || new Date()
     })) as ImageData[];
-    
+
     callback(images);
+  });
+}
+
+export async function updateImageAnalysis(imageId: string, analysisResult: AnalysisResult): Promise<void> {
+  const imageRef = doc(db, 'images', imageId);
+  await updateDoc(imageRef, {
+    analyzed: true,
+    analysisResult: {
+      predictions: analysisResult.predictions,
+      processedAt: analysisResult.processedAt
+    }
   });
 }
