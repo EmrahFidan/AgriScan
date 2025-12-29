@@ -11,6 +11,7 @@ export interface ImageData {
 export interface AnalysisResult {
   predictions: Prediction[];
   processedAt: Date;
+  allClasses?: string[]; // Modelin tum sinif isimleri
 }
 
 export interface Prediction {

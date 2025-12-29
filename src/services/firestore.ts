@@ -1,4 +1,4 @@
-import { collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { ImageData, AnalysisResult } from '../types';
 
@@ -33,7 +33,13 @@ export async function updateImageAnalysis(imageId: string, analysisResult: Analy
     analyzed: true,
     analysisResult: {
       predictions: analysisResult.predictions,
-      processedAt: analysisResult.processedAt
+      processedAt: analysisResult.processedAt,
+      allClasses: analysisResult.allClasses || []
     }
   });
+}
+
+export async function deleteImage(imageId: string): Promise<void> {
+  const imageRef = doc(db, 'images', imageId);
+  await deleteDoc(imageRef);
 }
