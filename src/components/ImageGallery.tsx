@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ImageData } from '../types';
+import type { ImageData } from '../types';
 import { subscribeToImages } from '../services/firestore';
 
 export default function ImageGallery() {

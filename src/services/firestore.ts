@@ -1,6 +1,6 @@
 import { collection, getDocs, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { ImageData } from '../types';
+import type { ImageData } from '../types';
 
 export async function getImages(): Promise<ImageData[]> {
   const q = query(collection(db, 'images'), orderBy('uploadedAt', 'desc'));

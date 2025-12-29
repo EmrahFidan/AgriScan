@@ -1,6 +1,6 @@
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { UploadProgress } from '../types';
+import type { UploadProgress } from '../types';
 
 // Local storage - gorseller tarayicide tutulur
 // Backend eklenince gercek storage'a gecilecek

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { UploadProgress } from '../types';
+import type { UploadProgress } from '../types';
 import { uploadMultipleImages } from '../services/storage';
 
 interface DropzoneProps {
