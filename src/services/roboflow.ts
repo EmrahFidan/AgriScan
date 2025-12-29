@@ -1,8 +1,8 @@
 import type { AnalysisResult, Prediction } from '../types';
 
-const ROBOFLOW_API_KEY = 'RCS2Ln8hp4b6yggMM8mT';
-const ROBOFLOW_MODEL = 'tomato-leaf-disease-ssoha';
-const ROBOFLOW_VERSION = '63';
+const ROBOFLOW_API_KEY = 'rf_0ENXup3QuBNfCPxSN2HcbVIZ1Tr2';
+const ROBOFLOW_MODEL = 'tomato-leaf-disease-rxcft';
+const ROBOFLOW_VERSION = '3';
 
 interface RoboflowPrediction {
   class: string;
