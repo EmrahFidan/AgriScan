@@ -1,5 +1,7 @@
 # AgriScan - Tomato Leaf Disease Detection
 
+> **🔒 Security Note:** Firebase API keys in this project are intentionally public. This is by design - Firebase security is enforced through Security Rules, not by hiding API keys. [Learn more](https://firebase.google.com/docs/projects/api-keys)
+
 AI-powered tomato leaf disease detection system using YOLOv11. Upload drone or camera images of tomato leaves and get instant disease diagnosis with treatment recommendations.
 
 ![AgriScan](https://img.shields.io/badge/AgriScan-Leaf%20Analysis-green)
