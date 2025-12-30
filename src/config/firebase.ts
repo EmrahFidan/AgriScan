@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey: "AIzaSyDmH4B-LGhfuSSIeDf9Pbog6e0Vng-dNps",
+  authDomain: "agriscan-3ea8d.firebaseapp.com",
+  projectId: "agriscan-3ea8d",
+  storageBucket: "agriscan-3ea8d.firebasestorage.app",
+  messagingSenderId: "780748696312",
+  appId: "1:780748696312:web:21eced1c41f69add02290d"
 };
 
 const app = initializeApp(firebaseConfig);
