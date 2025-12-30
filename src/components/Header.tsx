@@ -16,7 +16,7 @@ export default function Header() {
             </div>
             <div>
               <h1 className="font-display text-xl font-bold text-[#3d3426]">AgriScan</h1>
-              <p className="text-xs text-[#6b5d4d] font-medium">Yaprak Analiz Sistemi</p>
+              <p className="text-xs text-[#6b5d4d] font-medium">Leaf Analysis System</p>
             </div>
           </Link>
 
@@ -28,15 +28,15 @@ export default function Header() {
                 isActive('/') ? 'text-emerald-600' : 'text-[#6b5d4d] hover:text-[#3d3426]'
               }`}
             >
-              Nasil Calisir?
+              How It Works
             </Link>
             <Link
-              to="/hastaliklar"
+              to="/diseases"
               className={`text-sm font-medium transition-colors ${
-                isActive('/hastaliklar') ? 'text-emerald-600' : 'text-[#6b5d4d] hover:text-[#3d3426]'
+                isActive('/diseases') ? 'text-emerald-600' : 'text-[#6b5d4d] hover:text-[#3d3426]'
               }`}
             >
-              Hastaliklar
+              Diseases
             </Link>
           </nav>
 
@@ -45,7 +45,7 @@ export default function Header() {
             to="/lab"
             className="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-[#3d3426] font-bold rounded-xl text-sm transition-all hover:shadow-lg"
           >
-            Hemen Deneyin
+            Try Now
           </Link>
         </div>
       </div>

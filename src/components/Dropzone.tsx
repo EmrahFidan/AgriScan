@@ -1,12 +1,24 @@
 import { useState, useCallback } from 'react';
-import type { UploadProgress } from '../types';
-import { uploadMultipleImages } from '../services/storage';
+import type { UploadProgress, ImageData } from '../types';
 
 interface DropzoneProps {
-  onUploadComplete?: () => void;
+  onNewImages?: (images: ImageData[]) => void;
 }
 
-export default function Dropzone({ onUploadComplete }: DropzoneProps) {
+// File'i base64'e cevir
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+  });
+};
+
+// Unique ID olustur
+const generateId = () => Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+
+export default function Dropzone({ onNewImages }: DropzoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [progresses, setProgresses] = useState<UploadProgress[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -40,19 +52,70 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
     if (files.length > 0) {
       await handleUpload(files);
     }
+    // Input'u resetle (ayni dosyayi tekrar secebilmek icin)
+    e.target.value = '';
   };
 
   const handleUpload = async (files: File[]) => {
     setIsUploading(true);
-    try {
-      await uploadMultipleImages(files, setProgresses);
-      onUploadComplete?.();
-    } catch (error) {
-      console.error('Upload error:', error);
-    } finally {
-      setIsUploading(false);
-      setTimeout(() => setProgresses([]), 3000);
+
+    // Progress listesini baslat
+    const initialProgresses: UploadProgress[] = files.map(f => ({
+      fileName: f.name,
+      progress: 0,
+      status: 'pending'
+    }));
+    setProgresses(initialProgresses);
+
+    const newImages: ImageData[] = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Status'u uploading yap
+      setProgresses(prev => prev.map((p, idx) =>
+        idx === i ? { ...p, status: 'uploading', progress: 30 } : p
+      ));
+
+      try {
+        // Base64'e cevir
+        const base64 = await fileToBase64(file);
+
+        // Progress guncelle
+        setProgresses(prev => prev.map((p, idx) =>
+          idx === i ? { ...p, progress: 70 } : p
+        ));
+
+        // ImageData olustur
+        const imageData: ImageData = {
+          id: generateId(),
+          fileName: file.name,
+          url: base64,
+          uploadedAt: new Date(),
+          analyzed: false
+        };
+
+        newImages.push(imageData);
+
+        // Tamamlandi
+        setProgresses(prev => prev.map((p, idx) =>
+          idx === i ? { ...p, status: 'completed', progress: 100 } : p
+        ));
+      } catch (error) {
+        console.error('File conversion error:', error);
+        setProgresses(prev => prev.map((p, idx) =>
+          idx === i ? { ...p, status: 'error', progress: 0 } : p
+        ));
+      }
     }
+
+    // Yeni gorselleri parent'a gonder
+    if (newImages.length > 0) {
+      onNewImages?.(newImages);
+    }
+
+    setIsUploading(false);
+    setTimeout(() => setProgresses([]), 3000);
   };
 
   const completedCount = progresses.filter(p => p.status === 'completed').length;
@@ -95,16 +158,16 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
           <div>
             <h3 className="font-display text-2xl font-bold text-earth mb-2">
               {isUploading
-                ? 'Goruntuler Yukleniyor...'
+                ? 'Uploading Images...'
                 : isDragging
-                  ? 'Birakin!'
-                  : 'Goruntuleri Buraya Surukleyin'
+                  ? 'Drop Here!'
+                  : 'Drag Images Here'
               }
             </h3>
             <p className="text-earth-light">
               {isUploading
-                ? 'Lutfen bekleyin, dosyalariniz isleniyor'
-                : 'veya secmek icin tiklayin'
+                ? 'Please wait, processing your files'
+                : 'or click to select'
               }
             </p>
           </div>
@@ -118,7 +181,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
                 </span>
               ))}
               <span className="px-3 py-1.5 bg-amber-500 text-[#3d3426] rounded-full text-xs font-bold shadow-sm">
-                Coklu Secim
+                Multi Select
               </span>
             </div>
           )}
@@ -131,7 +194,7 @@ export default function Dropzone({ onUploadComplete }: DropzoneProps) {
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="font-semibold text-earth">Yukleme Durumu</span>
+              <span className="font-semibold text-earth">Upload Status</span>
             </div>
             <span className="text-sm font-bold px-4 py-1.5 bg-emerald-600 text-white rounded-full shadow-sm">
               {completedCount} / {totalCount}

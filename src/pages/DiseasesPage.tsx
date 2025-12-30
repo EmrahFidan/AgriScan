@@ -7,36 +7,36 @@ export default function DiseasesPage() {
 
   const severityConfig = {
     healthy: {
-      label: 'Saglikli',
+      label: 'Healthy',
       bg: 'bg-emerald-500',
       bgLight: 'bg-emerald-50',
       border: 'border-emerald-200',
       text: 'text-emerald-700',
-      description: 'Bitki saglikli durumda, herhangi bir hastalik belirtisi yok.'
+      description: 'Plant is healthy with no disease symptoms.'
     },
     low: {
-      label: 'Dusuk Risk',
+      label: 'Low Risk',
       bg: 'bg-yellow-500',
       bgLight: 'bg-yellow-50',
       border: 'border-yellow-200',
       text: 'text-yellow-700',
-      description: 'Erken mudahale ile kolayca kontrol altina alinabilir.'
+      description: 'Can be easily controlled with early intervention.'
     },
     medium: {
-      label: 'Orta Risk',
+      label: 'Medium Risk',
       bg: 'bg-orange-500',
       bgLight: 'bg-orange-50',
       border: 'border-orange-200',
       text: 'text-orange-700',
-      description: 'Dikkatli izleme ve zamaninda mudahale gerektirir.'
+      description: 'Requires careful monitoring and timely intervention.'
     },
     high: {
-      label: 'Yuksek Risk',
+      label: 'High Risk',
       bg: 'bg-red-500',
       bgLight: 'bg-red-50',
       border: 'border-red-200',
       text: 'text-red-700',
-      description: 'Acil mudahale gerektirir, hizla yayilabilir!'
+      description: 'Requires immediate action, spreads rapidly!'
     }
   };
 
@@ -48,17 +48,17 @@ export default function DiseasesPage() {
       <section className="py-12 bg-[#faf6ef] border-b border-[#e8dfd0]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-center gap-2 text-sm text-[#6b5d4d] mb-4">
-            <Link to="/" className="hover:text-emerald-600 transition-colors">Ana Sayfa</Link>
+            <Link to="/" className="hover:text-emerald-600 transition-colors">Home</Link>
             <span>/</span>
-            <span className="text-[#3d3426] font-medium">Hastaliklar</span>
+            <span className="text-[#3d3426] font-medium">Diseases</span>
           </div>
 
           <h1 className="font-display text-3xl md:text-4xl font-bold text-[#3d3426] mb-4">
-            Domates Yaprak Hastaliklari Rehberi
+            Tomato Leaf Diseases Guide
           </h1>
           <p className="text-lg text-[#6b5d4d] max-w-3xl">
-            YOLOv11 modelimizin tespit edebildigi 9 farkli hastalik sinifi hakkinda detayli bilgi.
-            Her hastalik icin belirtiler, nedenler ve tedavi yontemlerini inceleyin.
+            Detailed information about 9 different disease classes that our YOLOv11 model can detect.
+            Explore symptoms, causes, and treatment methods for each disease.
           </p>
         </div>
       </section>
@@ -67,7 +67,7 @@ export default function DiseasesPage() {
       <section className="py-6 bg-[#f5f0e8] border-b border-[#e8dfd0]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-wrap items-center gap-4">
-            <span className="text-sm font-medium text-[#3d3426]">Risk Seviyeleri:</span>
+            <span className="text-sm font-medium text-[#3d3426]">Risk Levels:</span>
             {Object.entries(severityConfig).map(([key, config]) => (
               <div key={key} className="flex items-center gap-2">
                 <div className={`w-3 h-3 rounded-full ${config.bg}`}></div>
@@ -152,7 +152,7 @@ export default function DiseasesPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                               </svg>
                             </div>
-                            <h3 className="font-display font-bold text-lg text-[#3d3426]">Belirtiler</h3>
+                            <h3 className="font-display font-bold text-lg text-[#3d3426]">Symptoms</h3>
                           </div>
 
                           {disease.symptoms.length > 0 ? (
@@ -165,7 +165,7 @@ export default function DiseasesPage() {
                               ))}
                             </ul>
                           ) : (
-                            <p className="text-[#6b5d4d] italic">Hastalik belirtisi bulunmuyor - saglikli yaprak.</p>
+                            <p className="text-[#6b5d4d] italic">No disease symptoms - healthy leaf.</p>
                           )}
                         </div>
 
@@ -178,7 +178,7 @@ export default function DiseasesPage() {
                               </svg>
                             </div>
                             <h3 className="font-display font-bold text-lg text-[#3d3426]">
-                              {disease.severity === 'healthy' ? 'Bakim Onerileri' : 'Tedavi Yontemleri'}
+                              {disease.severity === 'healthy' ? 'Care Tips' : 'Treatment Methods'}
                             </h3>
                           </div>
 
@@ -205,8 +205,8 @@ export default function DiseasesPage() {
                               </svg>
                             </div>
                             <div>
-                              <p className="font-bold text-red-800">Dikkat: Yuksek Riskli Hastalik!</p>
-                              <p className="text-sm text-red-700">Bu hastalik hizla yayilabilir. Hasta bitkileri derhal izole edin ve komsu bitkileri koruyucu onlemlerle koruma altina alin.</p>
+                              <p className="font-bold text-red-800">Warning: High Risk Disease!</p>
+                              <p className="text-sm text-red-700">This disease can spread rapidly. Immediately isolate infected plants and protect neighboring plants with preventive measures.</p>
                             </div>
                           </div>
                         </div>
@@ -224,16 +224,16 @@ export default function DiseasesPage() {
       <section className="py-12 bg-[#3d3426]">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="font-display text-2xl md:text-3xl font-bold text-white mb-4">
-            Yapraklarinizi Analiz Etmeye Hazir misiniz?
+            Ready to Analyze Your Leaves?
           </h2>
           <p className="text-[#d4c4b0] mb-8">
-            Goruntulerinizi yukleyin, yapay zeka saniyeler icinde hastalik tespiti yapsin.
+            Upload your images and let AI detect diseases in seconds.
           </p>
           <Link
             to="/lab"
             className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-[#3d3426] font-bold rounded-xl text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
           >
-            <span>Analiz Laboratuvarina Git</span>
+            <span>Go to Analysis Lab</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -251,19 +251,19 @@ export default function DiseasesPage() {
               </div>
               <div>
                 <p className="font-display text-xl font-bold text-[#faf6ef]">AgriScan</p>
-                <p className="text-sm text-[#d4c4b0]">Akilli Tarim Cozumleri</p>
+                <p className="text-sm text-[#d4c4b0]">Smart Agriculture Solutions</p>
               </div>
             </div>
 
             <div className="flex gap-4">
-              <Link to="/" className="text-[#d4c4b0] hover:text-white transition-colors">Ana Sayfa</Link>
-              <Link to="/lab" className="text-[#d4c4b0] hover:text-white transition-colors">Laboratuvar</Link>
-              <Link to="/hastaliklar" className="text-amber-400 font-medium">Hastaliklar</Link>
+              <Link to="/" className="text-[#d4c4b0] hover:text-white transition-colors">Home</Link>
+              <Link to="/lab" className="text-[#d4c4b0] hover:text-white transition-colors">Laboratory</Link>
+              <Link to="/diseases" className="text-amber-400 font-medium">Diseases</Link>
             </div>
           </div>
 
           <div className="mt-8 pt-6 border-t border-[#4a3f35] text-center text-sm text-[#a89880]">
-            2024 AgriScan - YOLOv11 AI Model ile Desteklenmektedir
+            2024 AgriScan - Powered by YOLOv11 AI Model
           </div>
         </div>
       </footer>

@@ -7,17 +7,17 @@ export default function LandingPage() {
       <section className="py-20 md:py-28">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <span className="inline-block px-4 py-2 bg-emerald-100 text-emerald-800 rounded-full text-sm font-semibold mb-6">
-            YOLOv11 Yapay Zeka Destekli
+            Powered by YOLOv11 AI
           </span>
 
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-[#3d3426] mb-6">
-            Domates Yaprak Hastaliklarini
-            <span className="block text-emerald-700 mt-2">Saniyeler Icinde Tespit Edin</span>
+            Detect Tomato Leaf Diseases
+            <span className="block text-emerald-700 mt-2">In Seconds</span>
           </h1>
 
           <p className="text-lg text-[#6b5d4d] max-w-2xl mx-auto mb-10">
-            Tarim arazilerinizden alinan drone goruntularinde yaprak hastaliklarini
-            yapay zeka ile analiz edin. 9 farkli hastalik sinifi, detayli belirtiler ve tedavi onerileri.
+            Analyze leaf diseases in drone images from your agricultural fields using AI.
+            9 different disease classes, detailed symptoms, and treatment recommendations.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -25,16 +25,16 @@ export default function LandingPage() {
               to="/lab"
               className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2"
             >
-              <span>Hemen Deneyin</span>
+              <span>Try Now</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
             <Link
-              to="/hastaliklar"
+              to="/diseases"
               className="px-8 py-4 bg-white hover:bg-gray-50 text-[#3d3426] font-bold rounded-xl text-lg transition-all shadow-lg hover:shadow-xl border-2 border-[#e8dfd0] inline-flex items-center justify-center gap-2"
             >
-              <span>Hastaliklari Incele</span>
+              <span>Browse Diseases</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -48,13 +48,13 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="inline-block px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold mb-4">
-              Kolay Kullanim
+              Easy to Use
             </span>
             <h2 className="font-display text-3xl md:text-4xl font-bold text-[#3d3426] mb-4">
-              Nasil Calisir?
+              How It Works
             </h2>
             <p className="text-[#6b5d4d] max-w-2xl mx-auto">
-              Sadece 3 adimda yaprak hastaliklarini tespit edin
+              Detect leaf diseases in just 3 simple steps
             </p>
           </div>
 
@@ -68,11 +68,11 @@ export default function LandingPage() {
                 1
               </div>
               <h3 className="font-display text-xl font-bold text-[#3d3426] mb-3">
-                Goruntu Yukleyin
+                Upload Images
               </h3>
               <p className="text-[#6b5d4d] text-sm">
-                Drone veya kamera ile cektiginiz yaprak goruntularini surukleyip birakin veya secin.
-                Ayni anda 50'den fazla goruntu yukleyebilirsiniz.
+                Drag and drop or select leaf images captured by drone or camera.
+                You can upload more than 50 images at once.
               </p>
             </div>
 
@@ -85,11 +85,11 @@ export default function LandingPage() {
                 2
               </div>
               <h3 className="font-display text-xl font-bold text-[#3d3426] mb-3">
-                AI Analiz Etsin
+                AI Analysis
               </h3>
               <p className="text-[#6b5d4d] text-sm">
-                YOLOv11 yapay zeka modelimiz goruntulerinizi saniyeler icinde tarar ve
-                9 farkli hastalik sinifini tespit eder.
+                Our YOLOv11 AI model scans your images in seconds and
+                detects 9 different disease classes.
               </p>
             </div>
 
@@ -102,11 +102,11 @@ export default function LandingPage() {
                 3
               </div>
               <h3 className="font-display text-xl font-bold text-[#3d3426] mb-3">
-                Sonuclari Gorun
+                View Results
               </h3>
               <p className="text-[#6b5d4d] text-sm">
-                Her hastalik icin detayli belirtiler ve tedavi onerileri alin.
-                Birden fazla hastalik tespiti durumunda tum detaylari gorebilirsiniz.
+                Get detailed symptoms and treatment recommendations for each disease.
+                View all details when multiple diseases are detected.
               </p>
             </div>
           </div>
@@ -117,7 +117,7 @@ export default function LandingPage() {
               to="/lab"
               className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-[#3d3426] font-bold rounded-xl text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
             >
-              <span>Baslamak Icin Tiklayin</span>
+              <span>Click to Get Started</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -132,23 +132,23 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white rounded-2xl p-6 border border-[#e8dfd0] text-center">
               <div className="text-4xl mb-3">🎯</div>
-              <h4 className="font-bold text-[#3d3426] mb-2">%85+ Dogruluk</h4>
-              <p className="text-sm text-[#6b5d4d]">Yuksek dogruluk oranli AI modeli</p>
+              <h4 className="font-bold text-[#3d3426] mb-2">85%+ Accuracy</h4>
+              <p className="text-sm text-[#6b5d4d]">High accuracy AI model</p>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-[#e8dfd0] text-center">
               <div className="text-4xl mb-3">⚡</div>
-              <h4 className="font-bold text-[#3d3426] mb-2">Hizli Analiz</h4>
-              <p className="text-sm text-[#6b5d4d]">Saniyeler icinde sonuc</p>
+              <h4 className="font-bold text-[#3d3426] mb-2">Fast Analysis</h4>
+              <p className="text-sm text-[#6b5d4d]">Results in seconds</p>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-[#e8dfd0] text-center">
               <div className="text-4xl mb-3">🔬</div>
-              <h4 className="font-bold text-[#3d3426] mb-2">9 Hastalik Sinifi</h4>
-              <p className="text-sm text-[#6b5d4d]">Kapsamli hastalik tespiti</p>
+              <h4 className="font-bold text-[#3d3426] mb-2">9 Disease Classes</h4>
+              <p className="text-sm text-[#6b5d4d]">Comprehensive disease detection</p>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-[#e8dfd0] text-center">
               <div className="text-4xl mb-3">💊</div>
-              <h4 className="font-bold text-[#3d3426] mb-2">Tedavi Onerileri</h4>
-              <p className="text-sm text-[#6b5d4d]">Detayli cozum onerileri</p>
+              <h4 className="font-bold text-[#3d3426] mb-2">Treatment Tips</h4>
+              <p className="text-sm text-[#6b5d4d]">Detailed solution recommendations</p>
             </div>
           </div>
         </div>
@@ -164,19 +164,19 @@ export default function LandingPage() {
               </div>
               <div>
                 <p className="font-display text-xl font-bold text-[#faf6ef]">AgriScan</p>
-                <p className="text-sm text-[#d4c4b0]">Akilli Tarim Cozumleri</p>
+                <p className="text-sm text-[#d4c4b0]">Smart Agriculture Solutions</p>
               </div>
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <span className="px-3 py-1.5 bg-[#4a3f35] text-[#d4c4b0] rounded-full">Domates Yaprak Hastaligi Tespiti</span>
-              <span className="px-3 py-1.5 bg-[#4a3f35] text-[#d4c4b0] rounded-full">9 Hastalik Sinifi</span>
-              <span className="px-3 py-1.5 bg-amber-500 text-[#3d3426] font-semibold rounded-full">%85+ Dogruluk</span>
+              <span className="px-3 py-1.5 bg-[#4a3f35] text-[#d4c4b0] rounded-full">Tomato Leaf Disease Detection</span>
+              <span className="px-3 py-1.5 bg-[#4a3f35] text-[#d4c4b0] rounded-full">9 Disease Classes</span>
+              <span className="px-3 py-1.5 bg-amber-500 text-[#3d3426] font-semibold rounded-full">85%+ Accuracy</span>
             </div>
           </div>
 
           <div className="mt-8 pt-6 border-t border-[#4a3f35] text-center text-sm text-[#a89880]">
-            2024 AgriScan - YOLOv11 AI Model ile Desteklenmektedir
+            2024 AgriScan - Powered by YOLOv11 AI Model
           </div>
         </div>
       </footer>

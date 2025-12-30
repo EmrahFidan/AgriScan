@@ -13,8 +13,8 @@ export default function ConfirmModal({
   isOpen,
   title,
   message,
-  confirmText = 'Onayla',
-  cancelText = 'Vazgec',
+  confirmText = 'Confirm',
+  cancelText = 'Cancel',
   type = 'danger',
   onConfirm,
   onCancel

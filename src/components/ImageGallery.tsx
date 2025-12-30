@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
-import type { ImageData } from '../types';
-import { subscribeToImages, updateImageAnalysis, deleteImage } from '../services/firestore';
+import { useState, useEffect } from 'react';
+import type { ImageData, AnalysisResult } from '../types';
 import { analyzeImage, DISEASE_LABELS, DISEASE_INFO } from '../services/api';
 import ConfirmModal from './ConfirmModal';
 
-export default function ImageGallery() {
-  const [images, setImages] = useState<ImageData[]>([]);
-  const [loading, setLoading] = useState(true);
+interface ImageGalleryProps {
+  images: ImageData[];
+  setImages: React.Dispatch<React.SetStateAction<ImageData[]>>;
+}
+
+export default function ImageGallery({ images, setImages }: ImageGalleryProps) {
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
 
   // selectedImage'i images array'inden al - boylece guncellenir
@@ -39,22 +41,6 @@ export default function ImageGallery() {
       return next;
     });
   };
-
-  useEffect(() => {
-    const unsubscribe = subscribeToImages((imgs) => {
-      setImages(imgs);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // Exit selection mode when no images selected
-  useEffect(() => {
-    if (selectionMode && selectedIds.size === 0 && images.length > 0) {
-      // Keep selection mode active
-    }
-  }, [selectedIds, selectionMode, images]);
 
   // Reset expanded diseases when selected image changes
   useEffect(() => {
@@ -91,19 +77,15 @@ export default function ImageGallery() {
     e.stopPropagation();
     setConfirmModal({
       isOpen: true,
-      title: 'Goruntu Silinsin mi?',
-      message: `"${image.fileName}" kalici olarak silinecek. Bu islem geri alinamaz.`,
-      onConfirm: async () => {
-        try {
-          await deleteImage(image.id);
-          if (selectedImageId === image.id) {
-            setSelectedImageId(null);
-          }
-          selectedIds.delete(image.id);
-          setSelectedIds(new Set(selectedIds));
-        } catch (error) {
-          console.error('Delete failed:', error);
+      title: 'Delete Image?',
+      message: `"${image.fileName}" will be permanently deleted. This action cannot be undone.`,
+      onConfirm: () => {
+        setImages(prev => prev.filter(img => img.id !== image.id));
+        if (selectedImageId === image.id) {
+          setSelectedImageId(null);
         }
+        selectedIds.delete(image.id);
+        setSelectedIds(new Set(selectedIds));
         setConfirmModal(prev => ({ ...prev, isOpen: false }));
       }
     });
@@ -113,23 +95,26 @@ export default function ImageGallery() {
     const count = selectedIds.size;
     setConfirmModal({
       isOpen: true,
-      title: `${count} Goruntu Silinsin mi?`,
-      message: `Secilen ${count} goruntu kalici olarak silinecek. Bu islem geri alinamaz.`,
-      onConfirm: async () => {
-        try {
-          const deletePromises = Array.from(selectedIds).map(id => deleteImage(id));
-          await Promise.all(deletePromises);
-          setSelectedIds(new Set());
-          setSelectionMode(false);
-          if (selectedImageId && selectedIds.has(selectedImageId)) {
-            setSelectedImageId(null);
-          }
-        } catch (error) {
-          console.error('Bulk delete failed:', error);
+      title: `Delete ${count} Images?`,
+      message: `Selected ${count} images will be permanently deleted. This action cannot be undone.`,
+      onConfirm: () => {
+        setImages(prev => prev.filter(img => !selectedIds.has(img.id)));
+        if (selectedImageId && selectedIds.has(selectedImageId)) {
+          setSelectedImageId(null);
         }
+        setSelectedIds(new Set());
+        setSelectionMode(false);
         setConfirmModal(prev => ({ ...prev, isOpen: false }));
       }
     });
+  };
+
+  const updateImageAnalysis = (imageId: string, analysisResult: AnalysisResult) => {
+    setImages(prev => prev.map(img =>
+      img.id === imageId
+        ? { ...img, analyzed: true, analysisResult }
+        : img
+    ));
   };
 
   const handleAnalyze = async (image: ImageData, e: React.MouseEvent) => {
@@ -141,7 +126,7 @@ export default function ImageGallery() {
 
     try {
       const result = await analyzeImage(image.url);
-      await updateImageAnalysis(image.id, result);
+      updateImageAnalysis(image.id, result);
     } catch (error) {
       console.error('Analysis failed:', error);
     } finally {
@@ -162,7 +147,7 @@ export default function ImageGallery() {
 
         try {
           const result = await analyzeImage(image.url);
-          await updateImageAnalysis(image.id, result);
+          updateImageAnalysis(image.id, result);
         } catch (error) {
           console.error(`Analysis failed for ${image.fileName}:`, error);
         } finally {
@@ -185,7 +170,7 @@ export default function ImageGallery() {
 
         try {
           const result = await analyzeImage(image.url);
-          await updateImageAnalysis(image.id, result);
+          updateImageAnalysis(image.id, result);
         } catch (error) {
           console.error(`Analysis failed for ${image.fileName}:`, error);
         } finally {
@@ -235,17 +220,6 @@ export default function ImageGallery() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20">
-        <div className="w-20 h-20 rounded-2xl bg-emerald-600 flex items-center justify-center mb-4 animate-pulse shadow-xl">
-          <span className="text-4xl">🌿</span>
-        </div>
-        <p className="text-earth-light font-medium">Goruntuler yukleniyor...</p>
-      </div>
-    );
-  }
-
   if (images.length === 0) {
     return (
       <div className="text-center py-20">
@@ -253,10 +227,10 @@ export default function ImageGallery() {
           <span className="text-6xl">🌱</span>
         </div>
         <h3 className="font-display text-2xl font-bold mb-3 text-earth">
-          Henuz Goruntu Yuklenmedi
+          No Images Uploaded Yet
         </h3>
         <p className="text-earth-light max-w-md mx-auto">
-          Yukaridaki alani kullanarak drone goruntulerinizi yukleyebilirsiniz
+          You can upload your drone images using the area above
         </p>
       </div>
     );
@@ -271,10 +245,10 @@ export default function ImageGallery() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
           <h2 className="font-display text-2xl md:text-3xl font-bold mb-2 text-earth">
-            Yuklenen Goruntuler
+            Uploaded Images
           </h2>
           <p className="text-earth-light">
-            Toplam <span className="font-semibold text-emerald-700">{images.length}</span> goruntu
+            Total <span className="font-semibold text-emerald-700">{images.length}</span> images
           </p>
         </div>
 
@@ -282,13 +256,13 @@ export default function ImageGallery() {
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200">
             <div className="w-3 h-3 rounded-full bg-emerald-500" />
             <span className="text-sm font-semibold text-emerald-800">
-              {images.filter(i => i.analyzed && i.analysisResult?.predictions?.length).length} Analiz Edildi
+              {images.filter(i => i.analyzed && i.analysisResult?.predictions?.length).length} Analyzed
             </span>
           </div>
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-50 border border-amber-200">
             <div className="w-3 h-3 rounded-full bg-amber-500" />
             <span className="text-sm font-semibold text-amber-800">
-              {pendingCount} Bekliyor
+              {pendingCount} Pending
             </span>
           </div>
 
@@ -313,7 +287,7 @@ export default function ImageGallery() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               )}
             </svg>
-            {selectionMode ? 'Iptal' : 'Sec'}
+            {selectionMode ? 'Cancel' : 'Select'}
           </button>
 
           {pendingCount > 0 && !selectionMode && (
@@ -325,10 +299,10 @@ export default function ImageGallery() {
               {analyzingIds.size > 0 ? (
                 <span className="flex items-center gap-2">
                   <span className="animate-spin">⏳</span>
-                  Analiz Ediliyor...
+                  Analyzing...
                 </span>
               ) : (
-                `Tumunu Analiz Et (${pendingCount})`
+                `Analyze All (${pendingCount})`
               )}
             </button>
           )}
@@ -345,10 +319,10 @@ export default function ImageGallery() {
               </div>
               <div>
                 <p className="text-white font-semibold">
-                  {selectedIds.size} goruntu secildi
+                  {selectedIds.size} images selected
                 </p>
                 <p className="text-amber-200 text-sm">
-                  Islem yapmak icin asagidaki butonlari kullanin
+                  Use the buttons below to perform actions
                 </p>
               </div>
             </div>
@@ -358,14 +332,14 @@ export default function ImageGallery() {
                 onClick={selectAll}
                 className="px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all"
               >
-                Tumunu Sec
+                Select All
               </button>
               <button
                 onClick={deselectAll}
                 disabled={selectedIds.size === 0}
                 className="px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 text-white hover:bg-white/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Secimi Kaldir
+                Deselect All
               </button>
               {selectedPendingCount > 0 && (
                 <button
@@ -373,7 +347,7 @@ export default function ImageGallery() {
                   disabled={analyzingIds.size > 0}
                   className="px-4 py-2 rounded-xl text-sm font-semibold bg-emerald-500 text-white hover:bg-emerald-600 transition-all disabled:opacity-50"
                 >
-                  Secilenleri Analiz Et ({selectedPendingCount})
+                  Analyze Selected ({selectedPendingCount})
                 </button>
               )}
               <button
@@ -381,7 +355,7 @@ export default function ImageGallery() {
                 disabled={selectedIds.size === 0}
                 className="px-4 py-2 rounded-xl text-sm font-semibold bg-red-500 text-white hover:bg-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Secilenleri Sil ({selectedIds.size})
+                Delete Selected ({selectedIds.size})
               </button>
             </div>
           </div>
@@ -433,7 +407,7 @@ export default function ImageGallery() {
                 <button
                   onClick={(e) => handleDeleteSingle(image, e)}
                   className="absolute top-3 left-3 w-8 h-8 rounded-lg bg-red-500/90 hover:bg-red-600 flex items-center justify-center shadow-lg transition-all opacity-0 group-hover:opacity-100 z-10"
-                  title="Sil"
+                  title="Delete"
                 >
                   <span className="text-white text-sm font-bold">✕</span>
                 </button>
@@ -466,7 +440,7 @@ export default function ImageGallery() {
                     {diseaseInfo.tr}
                   </p>
                   <p className="text-amber-200 text-xs">
-                    %{Math.round(mainPrediction.confidence * 100)} guven
+                    {Math.round(mainPrediction.confidence * 100)}% confidence
                   </p>
                 </div>
               )}
@@ -478,7 +452,7 @@ export default function ImageGallery() {
                     onClick={(e) => handleAnalyze(image, e)}
                     className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm transition-all shadow-lg"
                   >
-                    Analiz Et
+                    Analyze
                   </button>
                 </div>
               )}
@@ -491,19 +465,19 @@ export default function ImageGallery() {
       {selectedImage && !selectionMode && (() => {
         const isAnalyzing = analyzingIds.has(selectedImage.id);
         const severityConfig = {
-          healthy: { color: 'emerald', label: 'Saglikli', bg: 'bg-emerald-500', bgLight: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
-          low: { color: 'yellow', label: 'Dusuk Risk', bg: 'bg-yellow-500', bgLight: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200' },
-          medium: { color: 'orange', label: 'Orta Risk', bg: 'bg-orange-500', bgLight: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
-          high: { color: 'red', label: 'Yuksek Risk', bg: 'bg-red-500', bgLight: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' }
+          healthy: { color: 'emerald', label: 'Healthy', bg: 'bg-emerald-500', bgLight: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200' },
+          low: { color: 'yellow', label: 'Low Risk', bg: 'bg-yellow-500', bgLight: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200' },
+          medium: { color: 'orange', label: 'Medium Risk', bg: 'bg-orange-500', bgLight: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
+          high: { color: 'red', label: 'High Risk', bg: 'bg-red-500', bgLight: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' }
         };
 
         return (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#3d3426]/95 backdrop-blur-md animate-fadeIn"
+            className="fixed inset-0 z-50 flex items-start justify-center p-4 overflow-y-auto bg-[#3d3426]/95 backdrop-blur-md animate-fadeIn"
             onClick={() => setSelectedImageId(null)}
           >
             <div
-              className="relative w-full max-w-6xl max-h-[90vh] bg-[#faf6ef] rounded-3xl overflow-hidden animate-slideUp shadow-2xl flex flex-col lg:flex-row"
+              className="relative w-full max-w-6xl my-8 bg-[#faf6ef] rounded-3xl overflow-hidden animate-slideUp shadow-2xl flex flex-col lg:flex-row"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button - Top Right Corner */}
@@ -526,14 +500,14 @@ export default function ImageGallery() {
               </div>
 
               {/* Right Side - Details */}
-              <div className="lg:w-1/2 flex flex-col overflow-y-auto max-h-[60vh] lg:max-h-[90vh]">
+              <div className="lg:w-1/2 flex flex-col">
                 {/* Header */}
                 <div className="p-6 border-b border-[#e8dfd0]">
                   <h3 className="font-display font-bold text-xl text-earth truncate pr-8">
                     {selectedImage.fileName}
                   </h3>
                   <p className="text-sm text-earth-light mt-1">
-                    {selectedImage.uploadedAt?.toLocaleDateString('tr-TR', {
+                    {selectedImage.uploadedAt?.toLocaleDateString('en-US', {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric',
@@ -555,14 +529,14 @@ export default function ImageGallery() {
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                           </svg>
-                          Analiz Ediliyor...
+                          Analyzing...
                         </>
                       ) : (
                         <>
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                           </svg>
-                          {selectedImage.analyzed && selectedImage.analysisResult?.predictions?.length ? 'Tekrar Analiz Et' : 'Yapay Zeka ile Analiz Et'}
+                          {selectedImage.analyzed && selectedImage.analysisResult?.predictions?.length ? 'Re-Analyze' : 'Analyze with AI'}
                         </>
                       )}
                     </button>
@@ -574,7 +548,7 @@ export default function ImageGallery() {
                           <div className="h-full bg-emerald-500 rounded-full animate-progress" />
                         </div>
                         <p className="text-xs text-earth-light text-center">
-                          YOLOv11 modeli goruntunuzu analiz ediyor...
+                          YOLOv11 model is analyzing your image...
                         </p>
                       </div>
                     )}
@@ -624,9 +598,9 @@ export default function ImageGallery() {
                           {/* Confidence Bar */}
                           <div className="mt-4">
                             <div className="flex items-center justify-between text-sm mb-2">
-                              <span className="text-earth-light">Guven Orani</span>
+                              <span className="text-earth-light">Confidence</span>
                               <span className={`font-bold ${topSeverity.text}`}>
-                                %{Math.round(topPred.confidence * 100)}
+                                {Math.round(topPred.confidence * 100)}%
                               </span>
                             </div>
                             <div className="h-3 bg-white rounded-full overflow-hidden">
@@ -646,7 +620,7 @@ export default function ImageGallery() {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                             </svg>
-                            Diger Tespit Edilen Durumlar ({aggregated.length - 1})
+                            Other Detected Conditions ({aggregated.length - 1})
                           </h5>
                           {aggregated.slice(1).filter(p => p.class.toLowerCase() !== 'healthy').map((pred, idx) => {
                             const info = DISEASE_INFO[pred.class] || {
@@ -682,7 +656,7 @@ export default function ImageGallery() {
                                       </span>
                                       {pred.count > 1 && (
                                         <span className="text-xs px-1.5 py-0.5 rounded-full bg-white/50 text-earth-light">
-                                          {pred.count} bolge
+                                          {pred.count} regions
                                         </span>
                                       )}
                                     </div>
@@ -694,7 +668,7 @@ export default function ImageGallery() {
                                     </div>
                                   </div>
                                   <span className={`text-sm font-bold ${predSeverity.text}`}>
-                                    %{Math.round(pred.confidence * 100)}
+                                    {Math.round(pred.confidence * 100)}%
                                   </span>
                                   {/* Expand/Collapse Arrow */}
                                   <svg
@@ -722,7 +696,7 @@ export default function ImageGallery() {
                                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                                           </svg>
-                                          Belirtiler
+                                          Symptoms
                                         </h6>
                                         <ul className="space-y-1">
                                           {info.symptoms.map((symptom, sIdx) => (
@@ -742,7 +716,7 @@ export default function ImageGallery() {
                                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                           </svg>
-                                          Tedavi Onerileri
+                                          Treatment Tips
                                         </h6>
                                         <ul className="space-y-1">
                                           {info.treatment.map((item, tIdx) => (
@@ -769,7 +743,7 @@ export default function ImageGallery() {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
-                            Belirtiler
+                            Symptoms
                           </h5>
                           <ul className="space-y-2">
                             {topDiseaseInfo.symptoms.map((symptom, idx) => (
@@ -789,7 +763,7 @@ export default function ImageGallery() {
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            {topDiseaseInfo.severity === 'healthy' ? 'Oneriler' : 'Tedavi Onerileri'}
+                            {topDiseaseInfo.severity === 'healthy' ? 'Tips' : 'Treatment Tips'}
                           </h5>
                           <ul className="space-y-2">
                             {topDiseaseInfo.treatment.map((item, idx) => (
@@ -811,9 +785,9 @@ export default function ImageGallery() {
                     <div className="w-20 h-20 rounded-2xl bg-amber-100 flex items-center justify-center mb-4">
                       <span className="text-4xl">🔬</span>
                     </div>
-                    <h4 className="font-display font-bold text-lg text-earth">Analiz Bekleniyor</h4>
+                    <h4 className="font-display font-bold text-lg text-earth">Awaiting Analysis</h4>
                     <p className="text-earth-light text-sm mt-1 max-w-xs">
-                      Yapay zeka modelimiz ile bu goruntuyu analiz edin ve hastalik tespiti yapin
+                      Analyze this image with our AI model to detect diseases
                     </p>
                   </div>
                 )}
@@ -832,14 +806,14 @@ export default function ImageGallery() {
                         </div>
                       </div>
                     </div>
-                    <h4 className="font-display font-bold text-lg text-earth">Yaprak Analiz Ediliyor</h4>
+                    <h4 className="font-display font-bold text-lg text-earth">Analyzing Leaf</h4>
                     <p className="text-earth-light text-sm mt-1 max-w-xs">
-                      YOLOv11 modeli goruntuyu tarıyor ve hastalik belirtilerini arıyor...
+                      YOLOv11 model is scanning the image and looking for disease symptoms...
                     </p>
                     <div className="mt-4 w-full max-w-xs">
                       <div className="flex justify-between text-xs text-earth-light mb-1">
-                        <span>Analiz ediliyor</span>
-                        <span className="text-emerald-600 font-medium">Lutfen bekleyin</span>
+                        <span>Analyzing</span>
+                        <span className="text-emerald-600 font-medium">Please wait</span>
                       </div>
                       <div className="h-2 bg-[#e8dfd0] rounded-full overflow-hidden">
                         <div className="h-full bg-emerald-500 rounded-full animate-progress" />
@@ -858,8 +832,8 @@ export default function ImageGallery() {
         isOpen={confirmModal.isOpen}
         title={confirmModal.title}
         message={confirmModal.message}
-        confirmText="Sil"
-        cancelText="Vazgec"
+        confirmText="Delete"
+        cancelText="Cancel"
         type="danger"
         onConfirm={confirmModal.onConfirm}
         onCancel={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}

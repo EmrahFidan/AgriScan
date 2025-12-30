@@ -54,183 +54,183 @@ export interface DiseaseInfo {
 
 export const DISEASE_INFO: Record<string, DiseaseInfo> = {
   'Early Blight': {
-    tr: 'Erken Yaniklik',
+    tr: 'Early Blight',
     en: 'Early Blight',
     severity: 'medium',
     icon: '🍂',
-    description: 'Alternaria solani mantari kaynakli yaygin yaprak hastaligi.',
+    description: 'Common leaf disease caused by Alternaria solani fungus.',
     symptoms: [
-      'Konsantrik halkali kahverengi lekeler',
-      'Alt yapraklardan baslar yukari yayilir',
-      'Yaprak sararması ve erken dokulmesi',
-      'Leke etrafinda sari hale olusumu'
+      'Brown spots with concentric rings',
+      'Starts from lower leaves and spreads upward',
+      'Leaf yellowing and premature dropping',
+      'Yellow halo formation around spots'
     ],
     treatment: [
-      'Chlorothalonil veya Mancozeb iceren fungisit uygula',
-      'Hasta yapraklari hemen uzaklastir ve yok et',
-      'Bitki artıklarini temizle',
-      'Mulch kullanarak toprak sicramasini onle',
-      'Damlama sulama tercih et, yapraklari islatma'
+      'Apply fungicide containing Chlorothalonil or Mancozeb',
+      'Remove and destroy infected leaves immediately',
+      'Clean up plant debris',
+      'Use mulch to prevent soil splashing',
+      'Use drip irrigation, avoid wetting leaves'
     ]
   },
   'Healthy': {
-    tr: 'Saglikli',
+    tr: 'Healthy',
     en: 'Healthy',
     severity: 'healthy',
     icon: '✅',
-    description: 'Yaprakta herhangi bir hastalik belirtisi tespit edilmedi.',
+    description: 'No disease symptoms detected on the leaf.',
     symptoms: [
-      'Canli ve parlak yesil renk',
-      'Normal yaprak yapisi ve dokusu',
-      'Lekesiz ve deliksiz yuzey',
-      'Saglikli damar yapisi'
+      'Vibrant and bright green color',
+      'Normal leaf structure and texture',
+      'Spotless and hole-free surface',
+      'Healthy vein structure'
     ],
     treatment: [
-      'Duzenli sulama programi uygula',
-      'Dengeli gubreleme yap (N-P-K)',
-      'Koruyucu fungisit uygulamasi dusun',
-      'Bitki sagligini duzenli kontrol et'
+      'Maintain regular watering schedule',
+      'Apply balanced fertilization (N-P-K)',
+      'Consider preventive fungicide application',
+      'Monitor plant health regularly'
     ]
   },
   'Late Blight': {
-    tr: 'Gec Yaniklik',
+    tr: 'Late Blight',
     en: 'Late Blight',
     severity: 'high',
     icon: '☠️',
-    description: 'Phytophthora infestans - COK TEHLIKELI ve hizli yayilan hastalik. Acil mudahale gerektirir!',
+    description: 'Phytophthora infestans - VERY DANGEROUS and fast-spreading disease. Requires immediate action!',
     symptoms: [
-      'Yapraklarda sulu, koyu yesil-kahverengi lekeler',
-      'Yaprak altinda beyaz kuf tabakasi',
-      'Cok hizli yaprak olumu ve curumesi',
-      'Meyvelerde kahverengi sert lekeler',
-      'Nemli havalarda hizla yayilir'
+      'Watery, dark green-brown spots on leaves',
+      'White mold layer under leaves',
+      'Very rapid leaf death and decay',
+      'Brown hard spots on fruits',
+      'Spreads rapidly in humid conditions'
     ],
     treatment: [
-      'ACIL: Metalaxyl veya Fosetyl-Al iceren fungisit uygula',
-      'Hasta bitkileri HEMEN sok ve yok et',
-      'Havalandirmayi maksimum artir',
-      'Sulama miktarini azalt, nem kontrolu yap',
-      'Komsu bitkilere koruyucu ilaclama yap'
+      'URGENT: Apply fungicide containing Metalaxyl or Fosetyl-Al',
+      'Remove and destroy infected plants IMMEDIATELY',
+      'Maximize ventilation',
+      'Reduce watering, control humidity',
+      'Apply preventive treatment to neighboring plants'
     ]
   },
   'Leaf Miner': {
-    tr: 'Yaprak Galeri Sinegi',
+    tr: 'Leaf Miner',
     en: 'Leaf Miner',
     severity: 'medium',
     icon: '🪲',
-    description: 'Liriomyza sinegi larvalarinin yaprak ici dokularini yemesiyle olusan hasar.',
+    description: 'Damage caused by Liriomyza fly larvae feeding on leaf tissue.',
     symptoms: [
-      'Yapraklarda beyaz/gri kivrimli tunel izleri',
-      'Yaprak yuzeyinde zig-zag seklinde cizgiler',
-      'Yaprak sararması ve erken kurumasi',
-      'Fotosentez kapasitesinde belirgin azalma'
+      'White/gray winding tunnel trails on leaves',
+      'Zigzag lines on leaf surface',
+      'Leaf yellowing and premature drying',
+      'Significant reduction in photosynthesis capacity'
     ],
     treatment: [
-      'Sari yapiskanlı tuzaklar yerlestirilr',
-      'Zarar goren yapraklari topla ve yok et',
-      'Dogal dusmanları (parazitoid arilari) koru',
-      'Neem yagi spreyi uygula',
-      'Siddetli bulasmada Spinosad iceren insektisit kullan'
+      'Install yellow sticky traps',
+      'Collect and destroy damaged leaves',
+      'Protect natural enemies (parasitoid wasps)',
+      'Apply neem oil spray',
+      'Use Spinosad-based insecticide for severe infestations'
     ]
   },
   'Leaf Mold': {
-    tr: 'Yaprak Kufu',
+    tr: 'Leaf Mold',
     en: 'Leaf Mold',
     severity: 'medium',
     icon: '🍄',
-    description: 'Passalora fulva (Cladosporium) mantari kaynakli, ozellikle sera ortamlarinda yaygin.',
+    description: 'Caused by Passalora fulva (Cladosporium) fungus, common in greenhouse environments.',
     symptoms: [
-      'Yaprak ust yuzeyinde soluk sari-yesil lekeler',
-      'Yaprak alt yuzeyinde kahverengi-mor kuf tabakasi',
-      'Yaprak kivrilmasi ve burusması',
-      'Siddetli enfeksiyonda yaprak dokulmesi'
+      'Pale yellow-green spots on upper leaf surface',
+      'Brown-purple mold layer on lower leaf surface',
+      'Leaf curling and wrinkling',
+      'Leaf drop in severe infections'
     ],
     treatment: [
-      'Sera havalandirmasini iyilestir',
-      'Nem oranini %85 altinda tut',
-      'Yapraklari kuru tutacak sekilde sula',
-      'Copper veya Chlorothalonil fungisit uygula',
-      'Dayanikli domates cesitleri tercih et'
+      'Improve greenhouse ventilation',
+      'Keep humidity below 85%',
+      'Water in a way that keeps leaves dry',
+      'Apply Copper or Chlorothalonil fungicide',
+      'Choose resistant tomato varieties'
     ]
   },
   'Mosaic Virus': {
-    tr: 'Mozaik Virusu',
+    tr: 'Mosaic Virus',
     en: 'Mosaic Virus',
     severity: 'high',
     icon: '🧬',
-    description: 'Tobacco/Tomato Mosaic Virus - Mekanik temasla kolayca yayilan viral hastalik. TEDAVISI YOKTUR!',
+    description: 'Tobacco/Tomato Mosaic Virus - Viral disease easily spread by mechanical contact. NO CURE!',
     symptoms: [
-      'Yapraklarda acik-koyu yesil mozaik deseni',
-      'Yaprak kivrilmasi ve deformasyonu',
-      'Bitki gelisiminde gerileme',
-      'Meyvelerde sari lekelenme ve sekil bozuklugu'
+      'Light-dark green mosaic pattern on leaves',
+      'Leaf curling and deformation',
+      'Stunted plant growth',
+      'Yellow spotting and deformation on fruits'
     ],
     treatment: [
-      'Hasta bitkileri HEMEN sok ve yok et (yakarak)',
-      'Tum aletleri %10 camasir suyu ile dezenfekte et',
-      'Calismadan once ve sonra ellerini yika',
-      'Sigara icmeden once ellerini yika (TMV sigara bitkisinden gelir)',
-      'Direncli tohum cesitleri kullan'
+      'Remove and destroy infected plants IMMEDIATELY (by burning)',
+      'Disinfect all tools with 10% bleach solution',
+      'Wash hands before and after working',
+      'Wash hands before smoking (TMV comes from tobacco plant)',
+      'Use resistant seed varieties'
     ]
   },
   'Septoria': {
-    tr: 'Septoria Yaprak Lekesi',
+    tr: 'Septoria Leaf Spot',
     en: 'Septoria Leaf Spot',
     severity: 'medium',
     icon: '🔴',
-    description: 'Septoria lycopersici mantari kaynakli, sicak ve nemli havalarda yaygin.',
+    description: 'Caused by Septoria lycopersici fungus, common in warm and humid weather.',
     symptoms: [
-      'Kucuk (2-3mm), yuvarlak, grimsi lekeler',
-      'Leke merkezinde siyah noktalar (picnidia)',
-      'Genellikle alt yapraklardan baslar',
-      'Siddetli durumda tum yapraklar dokulu'
+      'Small (2-3mm), round, grayish spots',
+      'Black dots (pycnidia) in spot centers',
+      'Usually starts from lower leaves',
+      'All leaves affected in severe cases'
     ],
     treatment: [
-      'Copper veya Mancozeb fungisit uygula',
-      'Hasta yapraklari topla ve yok et',
-      '2-3 yillik ekim nobeti uygula',
-      'Yapraklari islatmadan dip sulama yap',
-      'Bitkiler arasi mesafeyi artir (havalandirma)'
+      'Apply Copper or Mancozeb fungicide',
+      'Collect and destroy infected leaves',
+      'Apply 2-3 year crop rotation',
+      'Use drip irrigation without wetting leaves',
+      'Increase plant spacing (ventilation)'
     ]
   },
   'Spider Mites': {
-    tr: 'Kirmizi Orumcek',
+    tr: 'Spider Mites',
     en: 'Spider Mites',
     severity: 'low',
     icon: '🕷️',
-    description: 'Tetranychus urticae - Sicak ve kuru havalarda hizla coğalan kucuk akar zararlisi.',
+    description: 'Tetranychus urticae - Small mite pest that multiplies rapidly in hot and dry conditions.',
     symptoms: [
-      'Yaprak ust yuzeyinde soluk noktaciklarla',
-      'Yaprak altinda ince ag (ipek) tabakasi',
-      'Yapraklarda bronzlasma ve kuruma',
-      'Siddetli bulasmada bitki olumu'
+      'Pale spots on upper leaf surface',
+      'Fine webbing (silk) layer under leaves',
+      'Bronzing and drying of leaves',
+      'Plant death in severe infestations'
     ],
     treatment: [
-      'Yapraklari guclu su jeti ile yika',
-      'Abamectin veya Spiromesifen akarisit uygula',
-      'Dogal dusmanları (Phytoseiulus) satin al',
-      'Ortam nemini artir (%60 ustu)',
-      'Asiri azotlu gubrelemeden kacin'
+      'Wash leaves with strong water jet',
+      'Apply Abamectin or Spiromesifen acaricide',
+      'Purchase natural enemies (Phytoseiulus)',
+      'Increase ambient humidity (above 60%)',
+      'Avoid excessive nitrogen fertilization'
     ]
   },
   'Yellow Leaf Curl Virus': {
-    tr: 'Sari Yaprak Kivircikligi',
+    tr: 'Yellow Leaf Curl Virus',
     en: 'Yellow Leaf Curl Virus',
     severity: 'high',
     icon: '🦟',
-    description: 'TYLCV - Beyazsinek (Bemisia tabaci) ile tasinan cok zararli viral hastalik. TEDAVISI YOKTUR!',
+    description: 'TYLCV - Very harmful viral disease transmitted by whitefly (Bemisia tabaci). NO CURE!',
     symptoms: [
-      'Yaprak kenarlari yukari dogru kivrilir',
-      'Yapraklarda belirgin sararma',
-      'Bitki bodurlasmasi ve gelisim durması',
-      'Cicek ve meyve dusmesi, verim kaybi'
+      'Leaf edges curl upward',
+      'Significant yellowing of leaves',
+      'Plant stunting and growth arrest',
+      'Flower and fruit drop, yield loss'
     ],
     treatment: [
-      'Hasta bitkileri HEMEN sok ve yok et',
-      'Beyazsinekle etkin mucadele et (sari tuzak + insektisit)',
-      'Ag ortu (tul) ile fiziksel bariyer olustur',
-      'TYLCV direncli domates cesitleri kullan',
-      'Sera girislerine cift kapi sistemi kur'
+      'Remove and destroy infected plants IMMEDIATELY',
+      'Control whiteflies effectively (yellow traps + insecticide)',
+      'Create physical barrier with mesh cover',
+      'Use TYLCV resistant tomato varieties',
+      'Install double door system at greenhouse entrances'
     ]
   }
 };
