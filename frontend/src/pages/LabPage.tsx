@@ -1,10 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Dropzone from '../components/Dropzone';
 import ImageGallery from '../components/ImageGallery';
 import type { ImageData } from '../types';
+import { loadImages, saveImages } from '../services/localStorage';
 
 export default function LabPage() {
   const [images, setImages] = useState<ImageData[]>([]);
+
+  // Sayfa yüklenince localStorage'dan geri yükle
+  useEffect(() => {
+    const saved = loadImages();
+    if (saved.length > 0) setImages(saved);
+  }, []);
+
+  // Her değişiklikte localStorage'a kaydet
+  useEffect(() => {
+    saveImages(images);
+  }, [images]);
 
   const handleNewImages = (newImages: ImageData[]) => {
     setImages(prev => [...newImages, ...prev]);
